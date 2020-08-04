@@ -1,0 +1,10 @@
+<div class="container">
+  <h2>Search results</h2>
+  <hr>
+  <div class="show-list" *ngIf="searchResults">
+    <app-show-item *ngFor="let show of searchResults"
+      [show]="show"
+    ></app-show-item>
+    <p *ngIf="!searchResults.length">No Shows Available</p>
+  </div>
+</div>

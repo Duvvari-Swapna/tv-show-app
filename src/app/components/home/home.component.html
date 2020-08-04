@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="main">
+    <div *ngIf="filteredList">
+      <h2>{{ selectedGenre }}</h2>
+      <hr>
+      <div class="show-list">
+        <app-show-item *ngFor="let show of filteredList"
+          [show]="show"
+        ></app-show-item>
+        <p *ngIf="!filteredList.length">No Shows Available</p>
+      </div>
+    </div>
+  </div>
+</div>

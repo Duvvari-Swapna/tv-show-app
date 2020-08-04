@@ -1,0 +1,7 @@
+<a [routerLink]="['/', 'show', show?.id]" *ngIf="show">
+  <p-card [header]="show.name" id="header">
+    <p-header>
+      <img [src]="show?.image?.medium || 'assets/no-img.jpg'" [alt]="show.name" height="294px">
+    </p-header>
+  </p-card>
+</a>

@@ -1,0 +1,21 @@
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+h2 {
+  text-transform: capitalize;
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+
+hr {
+  border-top: 4px solid #8c8b8b;
+}
+
+.show-list {
+  display: grid;
+  row-gap: 16px;
+  column-gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}

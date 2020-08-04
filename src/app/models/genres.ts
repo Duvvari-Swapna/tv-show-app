@@ -1,0 +1,18 @@
+export enum Genres {
+    'Action',
+    'Adult',
+    'Adventure',
+    'Anime',
+    'Children',
+    'Comedy',
+    'Crime',
+    'Drama',
+    'Fantasy',
+    'History',
+    'Horror',
+    'Mystery',
+    'Sports',
+    'Thriller',
+    'Travel',
+    'War',
+  }

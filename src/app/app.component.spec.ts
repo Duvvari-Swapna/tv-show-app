@@ -1,16 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { HeaderComponent } from './components/header/header.component';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        SharedModule,
+        FormsModule
       ],
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        HeaderComponent
+      ]
     }).compileComponents();
   }));
 
@@ -20,16 +27,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tv-show-app'`, () => {
+  it(`should have as title 'TVShow'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('tv-show-app');
+    expect(app.title).toEqual('TVShow');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to tv-show-app!');
-  });
 });
