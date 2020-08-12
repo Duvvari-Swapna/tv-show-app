@@ -9,10 +9,9 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'TVShow';
 
-  constructor(private route: Router) {
-    this.route.navigate(['']);
-  }
+  constructor(private route: Router) {}
 
   ngOnInit() {
+    this.route.navigate(['']);
   }
 }

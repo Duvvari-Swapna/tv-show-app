@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,6 +19,7 @@ describe('HeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent, HomeComponent, ShowItemComponent, SearchPageComponent],
       imports: [
+        BrowserAnimationsModule,
         SharedModule,
         FormsModule,
         RouterTestingModule.withRoutes([
@@ -37,12 +39,6 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should render title in span tag', () => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div.col-md-6>span#dashboard').textContent).toContain('Dashboard');
   });
 
   it('should call goToDashboard method', () => {
@@ -69,17 +65,11 @@ describe('HeaderComponent', () => {
     expect(component.query).toBe('girls');
   });
 
-  it('should do searchShows button click ', async(() => {
-    spyOn(component, 'searchShows');
-    const button = fixture.debugElement.nativeElement.querySelector('div.search>div.input-group>button');
-    button.click();
-    fixture.whenStable().then(() => {
-      expect(component.searchShows).toHaveBeenCalled();
-    });
-  }));
-
-  it('should check goToDashboard function', (() => {
-    component.goToDashboard();
+  it('should call goToDashboard with home route ', inject([Router], (router: Router) => {
+      spyOn(router, 'navigate').and.stub();
+      router.navigate(['home']);
+      component.goToDashboard();
+      expect(router.navigate).toHaveBeenCalledWith(['home']);
   }));
 
   it('should check searchShows function if query param is not empty', (() => {
@@ -100,18 +90,11 @@ describe('HeaderComponent', () => {
       router.navigate(['search-results'], {
         queryParams: { query: queryObj }
       });
+      component.searchShows();
       expect(router.navigate).toHaveBeenCalledWith(['search-results'], {
         queryParams: { query: queryObj }
       });
-    }
-  ));
-
-  it(`goToDashboard() should navigate to home page`, inject(
-    [Router],
-    (router: Router) => {
-      spyOn(router, 'navigate').and.stub();
-      router.navigate(['home']);
-      expect(router.navigate).toHaveBeenCalledWith(['home']);
+      expect(component.query).toBe('');
     }
   ));
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IScheduledShow } from '../models/shows';
 import { ISearchResult } from '../models/search-result';
 import { IShow } from '../models/show';
 import { map, catchError } from 'rxjs/operators';
@@ -20,10 +19,10 @@ export class TvShowService {
     this.api = environment.API;
   }
 
-  getscheduledAll() {
-    return this.http.get(`${ this.api }/schedule/full`)
+  getAllShows() {
+    return this.http.get(`${ this.api }/shows`)
     .pipe(
-      map((shows: IScheduledShow[]) => {
+      map((shows: IShow[]) => {
         if (shows) {
           return shows;
         }

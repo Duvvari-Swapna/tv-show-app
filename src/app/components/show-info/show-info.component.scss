@@ -1,11 +1,5 @@
-h2 {
-    text-transform: capitalize;
-    margin-bottom: 1%;
-    margin-top: 1%;
-}
-
 hr {
-    border-top: 4px solid #8c8b8b;
+    border-top: 4px solid #cecaca;
 }
 
 .card {
@@ -14,15 +8,6 @@ hr {
     box-sizing: border-box;
     margin-top: 1%;
     margin-bottom: 1%;
-}
-
-.mat-card-image {
-    width: calc(100% + 32px);
-    margin: 0px -16px 0px -9px;
-}
-
-:host ::ng-deep .mat-card-image:first-child {
-    margin-top: 0;
 }
 
 .summary {
@@ -36,4 +21,12 @@ hr {
     margin-bottom: 5%;
     background-color: darkgrey;
     color: white;
+}
+
+@media (max-width: 600px) {
+    .main {
+        display: grid;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 }

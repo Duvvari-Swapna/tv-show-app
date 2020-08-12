@@ -15,12 +15,6 @@ describe('SearchPageComponent', () => {
   let fixture: ComponentFixture<SearchPageComponent>;
   let service: TvShowService;
 
-  const mockActivatedRoute = {
-    snapshot: {
-      queryParams: { query: 'girls' }
-    }
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SearchPageComponent, ShowItemComponent],
@@ -29,7 +23,13 @@ describe('SearchPageComponent', () => {
         SharedModule,
         HttpClientModule
       ],
-      providers: [{ provide: ActivatedRoute, useValue: mockActivatedRoute }]
+      providers: [{
+        provide: ActivatedRoute, useValue: {
+          queryParams: of({
+            query: 'girls'
+          })
+        }
+      }]
     })
       .compileComponents();
   }));
@@ -63,23 +63,16 @@ describe('SearchPageComponent', () => {
 
   it('should check response of subscribe and mock data match or not', () => {
     component.getShows();
-    spyOn(service, 'getShowsFromSearch').and.callFake(function (girls) {
+    expect(component.query).toBe('girls');
+    spyOn(service, 'getShowsFromSearch').and.callFake(girls => {
       if (girls) {
         return of(searchResults.default);
       }
     });
+    expect(component.query).toBe('girls');
     service.getShowsFromSearch('girls').subscribe((value) => {
       expect(value).toBe(searchResults.default);
     });
   });
-
-  it('should spy on getShows method', () => {
-    spyOn(component, 'getShows').and.callThrough();
-    component.getShows();
-    expect(component.getShows).toHaveBeenCalledWith();
-  });
-
-
-
 
 });

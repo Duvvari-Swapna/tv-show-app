@@ -4,9 +4,11 @@ import {
   MatToolbarModule,
   MatCardModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatListModule
  } from '@angular/material';
-import { CardModule } from 'primeng/card';
 
 @NgModule({
   imports: [
@@ -15,14 +17,18 @@ import { CardModule } from 'primeng/card';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    CardModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule
   ],
   exports: [
     MatToolbarModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    CardModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule
   ],
   declarations: [],
   providers: []

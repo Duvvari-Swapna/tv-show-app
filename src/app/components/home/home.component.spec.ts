@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TvShowService } from 'src/app/services/tv-show.service';
 import { of } from 'rxjs/internal/observable/of';
-import * as data from './../../../assets/JSON/scheduled.json';
+import * as data from './../../../assets/JSON/shows.json';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -26,39 +26,53 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     service = TestBed.get(TvShowService);
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getscheduledAll service if response is empty', () => {
-    spyOn(service, 'getscheduledAll').and.callFake(() => {
+  it('should call getAllShows service and check if response is there', () => {
+    spyOn(service, 'getAllShows').and.callFake(() => {
+      return of(data.default);
+    });
+    component.ngOnInit();
+    expect(service.getAllShows).toHaveBeenCalledWith();
+    expect(component.showsList.length).toBeGreaterThan(1);
+  });
+
+  it('should call getAllShows service and check if response is empty', () => {
+    spyOn(service, 'getAllShows').and.callFake(() => {
       return of([]);
     });
 
     component.ngOnInit();
-    expect(service.getscheduledAll).toHaveBeenCalledWith();
+    expect(service.getAllShows).toHaveBeenCalledWith();
     expect(component.showsList).toEqual([]);
-    expect(component.genreList).toEqual([]);
-    expect(component.filteredList).toEqual([]);
+    expect(component.duplicateGenres).toEqual([]);
+    expect(component.genreArr).toEqual([]);
     expect(component.selectedGenre).toMatch('');
   });
 
-  it('should call getscheduledAll service if response is there', () => {
-    spyOn(service, 'getscheduledAll').and.callFake(() => {
-      return of(data.default);
+  it('should call getGenreSpeclist with specific genre', () => {
+    const name = 'Drama';
+    component.showsList = data.default;
+    expect(component.showsList.length).toBeGreaterThan(1);
+    component.getGenreSpeclist(name);
+    expect(component.selectedGenre).toBe(name);
+    component.showsList.filter(show => {
+      show.genres.filter(genre => {
+        if (component.selectedGenre === genre) {
+          component.genreList.push(show);
+        }
+      });
     });
-    component.ngOnInit();
-    expect(service.getscheduledAll).toHaveBeenCalledWith();
-  });
-
-  it('should render title in p tag', () => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div.show-list>p').textContent).toContain('No Shows Available');
+    expect(component.genreList.length).toBeGreaterThan(1);
+    component.filteredList = component.genreList.slice(0, 5);
+    expect(component.filteredList.length).toEqual(5);
+    return component.filteredList;
   });
 
 });

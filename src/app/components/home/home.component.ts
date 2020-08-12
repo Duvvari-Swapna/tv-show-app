@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IShow } from 'src/app/models/show';
-import { Genres } from 'src/app/models/genres';
 import { TvShowService } from 'src/app/services/tv-show.service';
 
 @Component({
@@ -14,38 +13,47 @@ export class HomeComponent implements OnInit {
   selectedGenre = '';
   genreList: Array<IShow> = [];
   filteredList: Array<IShow> = [];
-  genreArr = [];
+  duplicateGenres: Array<string> = [];
+  genreArr: Array<string> = [];
 
-  constructor(private tvShowService: TvShowService) {
-    this.showsList = [], this.genreList = [], this.filteredList = [];
-    this.genreArr = Object.entries(Genres).filter(e => !isNaN(e[0] as any)).map(e => ({ name: e[1] }));
-   }
+  constructor(private tvShowService: TvShowService) { }
 
   ngOnInit() {
-    this.tvShowService.getscheduledAll().subscribe((response) => {
-      if (response.length > 0) {
-      response.filter(shows => {
-        this.showsList.push(shows._embedded.show);
-      });
-      // shuffle genre array to get random genre everytime
-      const randomGenre = this.genreArr.sort(() => 0.5 - Math.random());
-      this.selectedGenre = randomGenre[0]['name'];
-      this.showsList.forEach((show) => {
-          show.genres.filter((genre) => {
-            if (genre === this.selectedGenre) {
-              this.genreList.push(show);
-            }
-          });
-      });
-      this.filteredList = this.genreList.sort(() => 0.5 - Math.random()).slice(0, 5);
-    } else {
+    this.tvShowService.getAllShows().subscribe((response) => {
       this.showsList = [];
-      this.genreList = [];
-      this.selectedGenre = '';
-      this.filteredList = [];
-    }
+      if (response.length > 0) {
+        this.showsList = response;
+        // sorting the response to show highest rated shows accordingly of genre
+        this.showsList.sort((prev, curr) => (prev.rating.average < curr.rating.average) ? 1 : -1);
+        this.duplicateGenres = [];
+        this.showsList.forEach(show => {
+          show.genres.filter(genre => {
+            this.duplicateGenres.push(genre);
+          });
+        });
+        this.genreArr = Array.from(new Set(this.duplicateGenres));
+      } else {
+        this.showsList = [];
+        this.duplicateGenres = [];
+        this.selectedGenre = '';
+        this.genreArr = [];
+      }
     });
 
+  }
+
+  getGenreSpeclist(name) {
+    this.selectedGenre = name;
+    this.filteredList = [], this.genreList = [];
+    this.showsList.forEach(show => {
+      show.genres.filter(genre => {
+        if (this.selectedGenre === genre) {
+          this.genreList.push(show);
+        }
+      });
+    });
+    this.filteredList = this.genreList.slice(0, 5);
+    return this.filteredList;
   }
 
 }

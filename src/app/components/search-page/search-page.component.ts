@@ -15,18 +15,21 @@ export class SearchPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private service: TvShowService,
-  ) {
-    this.searchResults = [];
-  }
+  ) {}
 
   ngOnInit() {
+    sessionStorage.clear();
     this.getShows();
   }
 
   getShows() {
-    this.query = this.activatedRoute.snapshot.queryParams['query'];
-    this.service.getShowsFromSearch(this.query).subscribe((response) => {
-      response.filter((list) => this.searchResults.push(list.show));
+    this.query = '';
+    this.activatedRoute.queryParams.subscribe(val => {
+      this.query = val.query;
+      this.searchResults = [];
+      this.service.getShowsFromSearch(this.query).subscribe((response) => {
+        response.filter((list) => this.searchResults.push(list.show));
+      });
     });
   }
 }

@@ -1,17 +1,14 @@
-.main-page {
+.main {
   display: grid;
   row-gap: 32px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-h2 {
-  text-transform: capitalize;
+hr {
+  border-top: 4px solid #cecaca;
   margin-bottom: 1%;
   margin-top: 1%;
-}
-hr {
-  border-top: 4px solid #8c8b8b;
 }
 
 .show-list {
@@ -20,3 +17,4 @@ hr {
   column-gap: 16px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
+  

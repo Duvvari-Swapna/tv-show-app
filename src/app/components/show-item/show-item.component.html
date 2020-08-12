@@ -1,7 +1,10 @@
 <a [routerLink]="['/', 'show', show?.id]" *ngIf="show">
-  <p-card [header]="show.name" id="header">
-    <p-header>
-      <img [src]="show?.image?.medium || 'assets/no-img.jpg'" [alt]="show.name" height="294px">
-    </p-header>
-  </p-card>
+  <mat-card class="card">
+    <img mat-card-image [src]="show?.image?.medium || 'assets/images/no-img.jpg'" [alt]="show.name" height="235px">
+    <mat-card-content>
+      <p id="name">{{show?.name}}</p>
+      <p id="language"> {{show?.language}} </p>
+      <p id="rating"> {{show?.rating?.average || 'NA'}} <i class="material-icons" *ngIf="show?.rating?.average">star</i> </p>
+    </mat-card-content>
+  </mat-card>
 </a>
