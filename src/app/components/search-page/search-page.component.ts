@@ -18,7 +18,6 @@ export class SearchPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    sessionStorage.clear();
     this.getShows();
   }
 
