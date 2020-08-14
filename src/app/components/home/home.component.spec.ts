@@ -70,9 +70,7 @@ describe('HomeComponent', () => {
       });
     });
     expect(component.genreList.length).toBeGreaterThan(1);
-    component.filteredList = component.genreList.slice(0, 5);
-    expect(component.filteredList.length).toEqual(5);
-    return component.filteredList;
+    return component.genreList;
   });
 
 });

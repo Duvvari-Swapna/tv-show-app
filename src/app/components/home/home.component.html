@@ -1,12 +1,12 @@
 <div class="container">
-  <div class="main" *ngFor="let genre of genreArr">
-    <div>
-      <h2>{{ genre }}</h2>
-      <hr>
-      <div class="show-list">
-        <app-show-item *ngFor="let show of getGenreSpeclist(genre)" [show]="show"></app-show-item>
-        <p id="error" *ngIf="!filteredList.length">No Shows Available</p>
+  <div class="mainDiv" *ngFor="let genre of genreArr">
+    <h2>{{ genre }}</h2>
+    <hr>
+    <div class="cardDiv">
+      <div class="card--content" *ngFor="let show of getGenreSpeclist(genre)">
+        <app-show-item [show]="show"></app-show-item>
       </div>
+      <p id="error" *ngIf="!genreList.length">No Shows Available</p>
     </div>
   </div>
 </div>

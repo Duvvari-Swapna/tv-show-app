@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
             this.duplicateGenres.push(genre);
           });
         });
+        // Array.from creates a new array instance by iterating through duplicateGenres
         this.genreArr = Array.from(new Set(this.duplicateGenres));
       } else {
         this.showsList = [];
@@ -52,8 +53,7 @@ export class HomeComponent implements OnInit {
         }
       });
     });
-    this.filteredList = this.genreList.slice(0, 5);
-    return this.filteredList;
+    return this.genreList;
   }
 
 }

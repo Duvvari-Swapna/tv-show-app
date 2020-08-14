@@ -117,11 +117,6 @@ describe('ShowInfoComponent', () => {
     expect(compiled.querySelector('div.col-md-8>div.summary').innerHTML).toContain(mockObj.show.summary);
   }));
 
-  it('should render the title in matcard', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-card.header').textContent).toContain('Details');
-  }));
-
   it('should render the title in p tag for show language', async(() => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('p#lang').textContent).toContain(mockObj.show.language);

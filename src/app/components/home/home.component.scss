@@ -1,9 +1,4 @@
-.main {
-  display: grid;
-  row-gap: 32px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+
 
 hr {
   border-top: 4px solid #cecaca;
@@ -11,10 +6,25 @@ hr {
   margin-top: 1%;
 }
 
-.show-list {
-  display: grid;
-  row-gap: 16px;
-  column-gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.mainDiv {
+  margin-bottom: 3%;
 }
+
+.cardDiv {
+  display: flex;
+  min-width: 100%;
+  min-height: 200px;
+  overflow-x: auto;
+}
+
+.card--content {
+  min-width: 200px;
+  margin: 5px;
+}
+
+
+
+
+
+
   
