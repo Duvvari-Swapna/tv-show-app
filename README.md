@@ -20,6 +20,7 @@ Run `npm install` to get all the dependecies in the project directory and run `n
 
 . @angular/material@7.2.0 & @angular/cdk@7.2.0 for using angular material elements
 . @angular/flex-layout@7.0.0-beta.24 for layout of the application
+. Added material icons stylesheet link for the usage of icons
 
 ## Linting
 
