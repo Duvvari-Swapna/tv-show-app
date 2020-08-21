@@ -1,32 +1,74 @@
-<div class="container">
-  <div *ngIf="show">
-    <h2>{{ show.name }}</h2>
-    <hr>
-    <div class="row main">
-      <div class="col-md-8">
-        <mat-card class="card">
-          <div class="row">
-            <div class="col-md-4">
-              <img mat-card-image class="mat-card-image" [src]="show?.image?.medium" alt="show.name">
-            </div>
-            <div class="col-md-8">
-              <div [innerHTML]="show.summary" class="summary"></div>
-            </div>
+<button mat-mini-fab color="" (click)="goBack()">
+  <mat-icon>keyboard_backspace</mat-icon>
+</button>
+<div class="container" *ngIf="show">
+  <h1>{{ show?.name }}</h1>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Info">
+      <div>
+        <div fxLayout.md="row" fxLayout.lg="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="10px">
+          <div fxFlex="70">
+            <mat-card class="card">
+              <div fxLayout.md="row" fxLayout.lg="row" fxLayout.sm="column" fxLayout.gt-xs="column" fxLayout.xs="column"
+                fxLayoutGap="5px">
+                <div fxFlex="30">
+                  <img id="img" [src]="show?.image?.medium || 'assets/images/no-img.jpg'" alt="show?.name">
+                </div>
+                <div fxFlex="70">
+                  <div id="summary" [innerHTML]="show?.summary" class="summary"></div>
+                </div>
+              </div>
+            </mat-card>
           </div>
-        </mat-card>
+          <div fxFlex="30">
+            <mat-card class="card">
+              <p id="lang"><strong>Language:</strong> {{show?.language}}</p>
+              <p id="schedule"><strong>Schedule:</strong> {{ show?.schedule?.days.join(', ') }}
+                {{ show?.schedule?.time }}
+              </p>
+              <p id="status"><strong>Status:</strong> {{ show?.status }}</p>
+              <p id="type"><strong>Show Type:</strong> {{ show?.type }}</p>
+              <p id="genre"><strong>Genres:</strong> {{ show?.genres.join(' | ')}}</p>
+              <p id="site" *ngIf="show?.officialSite"><strong>Official site: </strong><a [href]="show?.officialSite"
+                  target="_blank">{{ show?.officialSite }}</a>
+              </p>
+            </mat-card>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <mat-card class="card">
-          <p id="lang"><strong>Language:</strong> {{show.language}}</p>
-          <p id="schedule"><strong>Schedule:</strong> {{ show.schedule.days.join(', ') }} {{ show.schedule.time }}</p>
-          <p id="status"><strong>Status:</strong> {{ show.status }}</p>
-          <p id="type"><strong>Show Type:</strong> {{ show.type }}</p>
-          <p id="genre"><strong>Genres:</strong> {{ show.genres.join(' | ')}}</p>
-          <p id="site"><strong>Official site: </strong><a [href]="show.officialSite"
-              target="_blank">{{ show.officialSite }}</a>
-          </p>
-        </mat-card>
+    </mat-tab>
+    <mat-tab label="Cast">
+      <div class="cardDiv" *ngIf="castList">
+        <div class="card--content" *ngFor="let item of castList">
+          <mat-card class="card">
+            <div class="profile-image">
+              <img [src]="item?.person?.image?.medium || 'assets/images/no-img.jpg'" alt="item?.person?.name" />
+            </div>
+            <div class="content">
+              <p class="person">{{item?.person?.name}}</p>
+              <span>as</span>
+              <p class="character">{{item?.character?.name}}</p>
+            </div>
+          </mat-card>
+        </div>
+        <p id="cast" *ngIf="!castList.length">Not Found Cast Members Details !</p>
       </div>
-    </div>
-  </div>
+    </mat-tab>
+    <mat-tab label="Crew">
+      <div class="cardDiv" *ngIf="crewList">
+        <div class="card--content" *ngFor="let item of crewList">
+          <mat-card class="card">
+            <div class="profile-image">
+              <img [src]="item?.person?.image?.medium || 'assets/images/no-img.jpg'" alt="item?.person?.name" />
+            </div>
+            <div class="content">
+              <p class="person">{{item?.person?.name}}</p>
+              <p class="character">{{item?.type}}</p>
+            </div>
+          </mat-card>
+        </div>
+        <p id="crew" *ngIf="!crewList.length">Not Found Crew Members Details !</p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

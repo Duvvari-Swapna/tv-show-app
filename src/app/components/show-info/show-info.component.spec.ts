@@ -3,17 +3,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShowInfoComponent } from './show-info.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import * as searchResults from './../../../assets/JSON/search-results.json';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { TvShowService } from 'src/app/services/tv-show.service';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ShowInfoComponent', () => {
   let component: ShowInfoComponent;
   let fixture: ComponentFixture<ShowInfoComponent>;
+  let service: TvShowService;
 
-  const mockObj = {
-    'score': 16.932875,
-    'show': {
+  const MOCK_OBJ = {
       'id': 139,
       'url': 'http://www.tvmaze.com/shows/139/girls',
       'name': 'Girls',
@@ -37,21 +38,7 @@ describe('ShowInfoComponent', () => {
         'average': 6.7
       },
       'weight': 97,
-      'network': {
-        'id': 8,
-        'name': 'HBO',
-        'country': {
-          'name': 'United States',
-          'code': 'US',
-          'timezone': 'America/New_York'
-        }
-      },
       'webChannel': null,
-      'externals': {
-        'tvrage': 30124,
-        'thetvdb': 220411,
-        'imdb': 'tt1723816'
-      },
       'image': {
         'medium': 'http://static.tvmaze.com/uploads/images/medium_portrait/31/78286.jpg',
         'original': 'http://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg'
@@ -60,19 +47,18 @@ describe('ShowInfoComponent', () => {
       'summary': '<p>This Emmy winning series is a comic look at the assorted humiliations and rare triumphs of a group of girls in their 20s.</p>',
       'updated': 1577601053,
       '_links': {
-        'self': {
+        'nextepisode': {
           'href': 'http://api.tvmaze.com/shows/139'
         },
         'previousepisode': {
           'href': 'http://api.tvmaze.com/episodes/1079686'
         }
       }
-    }
-  };
+    };
 
   const mockActivatedRoute = {
     snapshot: {
-      params: { showId: mockObj.show.id }
+      params: { showId: MOCK_OBJ.id }
     }
   };
 
@@ -82,7 +68,8 @@ describe('ShowInfoComponent', () => {
       imports: [
         SharedModule,
         RouterTestingModule.withRoutes([]),
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: ActivatedRoute, useValue: mockActivatedRoute }
@@ -94,57 +81,89 @@ describe('ShowInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShowInfoComponent);
     component = fixture.componentInstance;
-    component.show = searchResults.default[0].show;
+    component.show = MOCK_OBJ;
     fixture.detectChanges();
+    service = TestBed.get(TvShowService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render title in a h2 tag', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h2').textContent).toContain(mockObj.show.name);
-  }));
-
   it('should render the image', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div.col-md-4>img').src).toContain(mockObj.show.image.medium);
+    expect(compiled.querySelector('#img').src).toContain(MOCK_OBJ.image.medium);
   }));
 
   it('should render the summary in innerHTML', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('div.col-md-8>div.summary').innerHTML).toContain(mockObj.show.summary);
+    expect(compiled.querySelector('#summary').innerHTML).toContain(MOCK_OBJ.summary);
   }));
 
   it('should render the title in p tag for show language', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#lang').textContent).toContain(mockObj.show.language);
+    expect(compiled.querySelector('p#lang').textContent).toContain(MOCK_OBJ.language);
   }));
 
   it('should render the title in p tag for show schedule', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#schedule').textContent).toContain(mockObj.show.schedule.days.join(', '));
+    expect(compiled.querySelector('p#schedule').textContent).toContain(MOCK_OBJ.schedule.days.join(', '));
   }));
 
   it('should render the title in p tag for show status', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#status').textContent).toContain(mockObj.show.status);
+    expect(compiled.querySelector('p#status').textContent).toContain(MOCK_OBJ.status);
   }));
 
   it('should render the title in p tag for show type', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#type').textContent).toContain(mockObj.show.type);
+    expect(compiled.querySelector('p#type').textContent).toContain(MOCK_OBJ.type);
   }));
 
   it('should render the title in p tag for show genres', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#genre').textContent).toContain(mockObj.show.genres.join(' | '));
+    expect(compiled.querySelector('p#genre').textContent).toContain(MOCK_OBJ.genres.join(' | '));
   }));
 
   it('should render link in a tag for show official site', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p#site>a').textContent).toContain(mockObj.show.officialSite);
+    expect(compiled.querySelector('p#site>a').textContent).toContain(MOCK_OBJ.officialSite);
   }));
+
+  it('should check response of getShow()', () => {
+    component.ngOnInit();
+    spyOn(service, 'getShow').and.callFake(() => {
+        return of(MOCK_OBJ);
+    });
+    service.getShow(MOCK_OBJ.id).subscribe(value => {
+      component.show = value;
+    });
+    expect(component.show).toEqual(MOCK_OBJ);
+  });
+
+
+  it('should check response of getCastDetails()', () => {
+    component.ngOnInit();
+    spyOn(service, 'getCastDetails').and.callFake(() => {
+        return of([]);
+    });
+    service.getCastDetails(MOCK_OBJ.id).subscribe(value => {
+      component.castList = value;
+    });
+  });
+
+  it('should check response of getCrewDetails()', () => {
+    component.ngOnInit();
+    spyOn(service, 'getCrewDetails').and.callFake(() => {
+        return of([]);
+    });
+    service.getCrewDetails(MOCK_OBJ.id).subscribe(value => {
+      component.crewList = value;
+    });
+  });
+
+  it('should call goBack', () => {
+    component.goBack();
+  });
 
 });

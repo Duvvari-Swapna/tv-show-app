@@ -10,10 +10,13 @@ export class ErrorService {
   constructor() { }
 
   public handleError(error: HttpErrorResponse) {
-    console.error('server error:', error);
+    let errorMessage = '';
     if (error.error instanceof Error) {
-      const errMessage = error.error.message;
-      return throwError(errMessage);
+      // client-side error
+      errorMessage = `Error: ${error.error}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(error || 'Server error');
   }

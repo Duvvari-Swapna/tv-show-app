@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit {
   showsList: Array<IShow> = [];
   selectedGenre = '';
   genreList: Array<IShow> = [];
-  filteredList: Array<IShow> = [];
   duplicateGenres: Array<string> = [];
   genreArr: Array<string> = [];
 
@@ -43,9 +42,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-  getGenreSpeclist(name) {
+  displayShows(name): IShow[] {
     this.selectedGenre = name;
-    this.filteredList = [], this.genreList = [];
+    this.genreList = [];
     this.showsList.forEach(show => {
       show.genres.filter(genre => {
         if (this.selectedGenre === genre) {

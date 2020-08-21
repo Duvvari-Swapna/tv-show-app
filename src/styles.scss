@@ -4,6 +4,7 @@
 body {
     background-color: #7b7e80;
     color: white;
+    margin: 0;
 }
 
 input:focus,
@@ -12,4 +13,38 @@ textarea:focus,
 button:focus {
     outline: none;
 }
+
+.container {
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+h2 {
+    margin: 0;
+}
+  
+hr {
+    border-top: 4px solid #cecaca;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
+@media screen and (min-width: 980px) /* Desktop */ {
+    .container {
+        margin-left: 8%;
+        margin-right: 8%;
+    }
+  }
+  
+  @media screen  and (max-width: 1024px) /* Tablet */ {
+    .container {
+        margin: 3%;
+    }
+  }
+  
+  @media screen and (max-width: 500px) /* Mobile */ {
+    .container {
+        margin: 3%;
+    }
+  }
 

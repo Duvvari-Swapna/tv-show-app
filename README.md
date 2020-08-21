@@ -14,7 +14,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Installation
 
-Run `npm install` to get all the dependecies in the project directory and run `ng serve`. 
+Run `npm install` to get all the dependecies in the project directory and run `ng serve`.
+
+## Dependecies
+
+. @angular/flex-layout@7.0.0-beta.24 for layout of the application
+. <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> for material icons
 
 ## Linting
 

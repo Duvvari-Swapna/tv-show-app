@@ -1,18 +1,16 @@
-<mat-toolbar>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6">
-        <button mat-mini-fab color="basic" (click)="goToDashboard()">
-          <mat-icon>dashboard</mat-icon>
-        </button>
-      </div>
-      <div class="col-md-6 search">
-        <mat-form-field>
-          <input matInput type="text" [(ngModel)]="query" id="query" placeholder="Search Your Favourite Show"
-            (keyup.enter)="searchShows()">
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
-      </div>
+<mat-toolbar class="main">
+  <div fxLayout="row" class="row">
+    <div fxFlex fxLayoutAlign="start center">
+      <button mat-mini-fab color="basic" (click)="goToDashboard()">
+        <mat-icon>dashboard</mat-icon>
+      </button>
+    </div>
+    <div fxFlex.lg="25" fxLayoutAlign="end center">
+      <mat-form-field floatLabel="never">
+        <input matInput type="text" [(ngModel)]="query" id="query" placeholder="Search Your Favourite Shows"
+          (keyup.enter)="searchShows()">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
     </div>
   </div>
 </mat-toolbar>

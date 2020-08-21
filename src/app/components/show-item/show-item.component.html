@@ -1,6 +1,6 @@
 <a [routerLink]="['/', 'show', show?.id]" *ngIf="show">
   <mat-card class="card">
-    <img mat-card-image [src]="show?.image?.medium || 'assets/images/no-img.jpg'" [alt]="show.name" height="235px">
+    <img mat-card-image [src]="show?.image?.medium || 'assets/images/no-img.jpg'" [alt]="show?.name" height="235px">
     <mat-card-content>
       <p id="name">{{show?.name}}</p>
       <p id="language"> {{show?.language}} </p>

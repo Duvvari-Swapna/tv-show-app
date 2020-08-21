@@ -1,30 +1,26 @@
 
-
-hr {
-  border-top: 4px solid #cecaca;
-  margin-bottom: 1%;
-  margin-top: 1%;
-}
-
-.mainDiv {
-  margin-bottom: 3%;
-}
-
-.cardDiv {
-  display: flex;
-  min-width: 100%;
-  min-height: 200px;
-  overflow-x: auto;
-}
-
-.card--content {
-  min-width: 200px;
-  margin: 5px;
-}
-
-
-
-
-
-
+  .mainDiv {
+    margin-top: 2%;
+    margin-bottom: 4%;
+  }
   
+  .cardDiv {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+  }
+  
+  .card--content {
+    min-width: 200px;
+    margin: 7px;
+  }
+  
+
+@media (max-width: 600px) {
+  .card--content {
+    min-width: 250px;
+    margin: 7px;
+  }
+}
+

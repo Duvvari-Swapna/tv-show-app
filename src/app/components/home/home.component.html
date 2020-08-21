@@ -3,7 +3,7 @@
     <h2>{{ genre }}</h2>
     <hr>
     <div class="cardDiv">
-      <div class="card--content" *ngFor="let show of getGenreSpeclist(genre)">
+      <div class="card--content" *ngFor="let show of displayShows(genre)">
         <app-show-item [show]="show"></app-show-item>
       </div>
       <p id="error" *ngIf="!genreList.length">No Shows Available</p>

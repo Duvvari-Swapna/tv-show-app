@@ -1,18 +1,13 @@
-mat-toolbar {
+.main {
   background-color: #263238;
   color: white;
-}
 
-.search {
-  font-size: 12px;
-}
-
-mat-form-field {
-  width: 100%;
-}
-
-@media (max-width: 600px) {
-  .mat-toolbar-row, .mat-toolbar-single-row {
-    height: 90px;
+  .row {
+    width: 100%;
+  }
+  
+  mat-form-field {
+    font-size: 14px;
+    width: 100%;
   }
 }

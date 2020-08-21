@@ -4,13 +4,12 @@ import { ShowItemComponent } from './show-item.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import * as searchResults from './../../../assets/JSON/search-results.json';
 
 describe('ShowItemComponent', () => {
   let component: ShowItemComponent;
   let fixture: ComponentFixture<ShowItemComponent>;
 
-  const mockObj = {
+  const MOCK_OBJ = {
       'id': 139,
       'url': 'http://www.tvmaze.com/shows/139/girls',
       'name': 'Girls',
@@ -34,21 +33,7 @@ describe('ShowItemComponent', () => {
         'average': 6.7
       },
       'weight': 97,
-      'network': {
-        'id': 8,
-        'name': 'HBO',
-        'country': {
-          'name': 'United States',
-          'code': 'US',
-          'timezone': 'America/New_York'
-        }
-      },
       'webChannel': null,
-      'externals': {
-        'tvrage': 30124,
-        'thetvdb': 220411,
-        'imdb': 'tt1723816'
-      },
       'image': {
         'medium': 'http://static.tvmaze.com/uploads/images/medium_portrait/31/78286.jpg',
         'original': 'http://static.tvmaze.com/uploads/images/original_untouched/31/78286.jpg'
@@ -57,7 +42,7 @@ describe('ShowItemComponent', () => {
       'summary': '<p>This Emmy winning series is a comic look at the assorted humiliations and rare triumphs of a group of girls in their 20s.</p>',
       'updated': 1577601053,
       '_links': {
-        'self': {
+        'nextepisode': {
           'href': 'http://api.tvmaze.com/shows/139'
         },
         'previousepisode': {
@@ -79,7 +64,7 @@ describe('ShowItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShowItemComponent);
     component = fixture.componentInstance;
-    component.show = searchResults.default[0].show;
+    component.show = MOCK_OBJ;
     fixture.detectChanges();
   });
 
@@ -90,7 +75,7 @@ describe('ShowItemComponent', () => {
   it(`on click of show item should navigate to show info page with selected id`, inject(
     [Router],
     (router: Router) => {
-      const showId = mockObj.id;
+      const showId = MOCK_OBJ.id;
       spyOn(router, 'navigate').and.stub();
       router.navigate(['show'], {
         queryParams: { id: showId }
@@ -103,21 +88,21 @@ describe('ShowItemComponent', () => {
 
   it('should render the image', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-card.card>img').src).toContain(mockObj.image.medium);
+    expect(compiled.querySelector('mat-card.card>img').src).toContain(MOCK_OBJ.image.medium);
   }));
 
   it('should render title in p tag for name', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#name').textContent).toContain(mockObj.name);
+    expect(compiled.querySelector('#name').textContent).toContain(MOCK_OBJ.name);
   }));
 
   it('should render title in p tag for language', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#language').textContent).toContain(mockObj.language);
+    expect(compiled.querySelector('#language').textContent).toContain(MOCK_OBJ.language);
   }));
 
   it('should render title in p tag for rating', async(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#rating').textContent).toContain(mockObj.rating.average);
+    expect(compiled.querySelector('#rating').textContent).toContain(MOCK_OBJ.rating.average);
   }));
 });

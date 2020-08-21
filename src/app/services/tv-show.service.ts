@@ -5,6 +5,7 @@ import { ISearchResult } from '../models/search-result';
 import { IShow } from '../models/show';
 import { map, catchError } from 'rxjs/operators';
 import { ErrorService } from './error.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class TvShowService {
     this.api = environment.API;
   }
 
-  getAllShows() {
+  getAllShows(): Observable<IShow[]> {
     return this.http.get(`${ this.api }/shows`)
     .pipe(
       map((shows: IShow[]) => {
@@ -31,7 +32,7 @@ export class TvShowService {
     );
   }
 
-  getShowsFromSearch(query: string) {
+  getShowsFromSearch(query: string): Observable<ISearchResult[]> {
     return this.http.get<ISearchResult[]>(`${ this.api }/search/shows?q=${ query }`)
     .pipe(
       map((result: ISearchResult[]) => {
@@ -43,12 +44,36 @@ export class TvShowService {
     );
   }
 
-  getShow(showId: number) {
+  getShow(showId: number): Observable<IShow> {
     return this.http.get<IShow>(`${ this.api }/shows/${ showId }`)
     .pipe(
       map((show: IShow) => {
         if (show) {
           return show;
+        }
+      }),
+      catchError(this.error.handleError)
+    );
+  }
+
+  getCastDetails(showId: number) {
+    return this.http.get(`${ this.api }/shows/${ showId }/cast`)
+    .pipe(
+      map((cast: Array<object>) => {
+        if (cast) {
+          return cast;
+        }
+      }),
+      catchError(this.error.handleError)
+    );
+  }
+
+  getCrewDetails(showId: number) {
+    return this.http.get(`${ this.api }/shows/${ showId }/crew`)
+    .pipe(
+      map((crew: Array<object>) => {
+        if (crew) {
+          return crew;
         }
       }),
       catchError(this.error.handleError)

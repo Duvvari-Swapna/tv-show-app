@@ -1,10 +1,6 @@
-.container {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-hr {
-  border-top: 4px solid #cecaca;
+button {
+  margin: 5px 17px 5px 17px;
+  background-color: #d8d3d3;
 }
 
 .show-list {
@@ -13,3 +9,24 @@ hr {
   column-gap: 16px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
+
+@media(max-width: 600px) {
+  .show-list {
+    display: grid;
+    row-gap: 16px;
+    column-gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  button {
+    margin-left: 18px;
+  }
+}
+
+@media(width: 768px) {
+  button {
+      margin-left: 18px;
+  }
+}
+
+

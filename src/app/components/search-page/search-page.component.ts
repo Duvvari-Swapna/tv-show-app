@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IShow } from './../../models/show';
 import { TvShowService } from 'src/app/services/tv-show.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-search-page',
@@ -15,6 +16,7 @@ export class SearchPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private service: TvShowService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -30,5 +32,9 @@ export class SearchPageComponent implements OnInit {
         response.filter((list) => this.searchResults.push(list.show));
       });
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }
